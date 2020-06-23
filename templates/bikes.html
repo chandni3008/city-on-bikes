@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>CoB-Bikes</title>
+  <link href="{% static 'images/brand.jpg' %}" rel="icon" type="image/jpg">
+  <!-- google fonts -->
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Ubuntu:wght@300&display=swap" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;900&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+  <!-- CSS Stylesheets -->
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+  <!-- Font Awsome -->
+  <script src="https://kit.fontawesome.com/e78c468b88.js" crossorigin="anonymous"></script>
+  <!-- Bootstrap Script  -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<style>
+      .login-page
+  {
+    margin: 0 ;
+    padding: 1rem ; 
+    background-image:url({% static 'images/a1.jpg' %});
+    opacity: 0.8 ;
+    background-repeat:no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+  .main{
+    opacity: 0.9;
+  }
+</style>
+<body>
+
+
+    <div class="container-fluid">
+      <section id="title">
+      <!-- Nav Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{% url 'index' %}">CityonBikes</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto ">
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>             
+            </ul>
+          </div>
+        </nav>
+    
+    </section>
+    <div class="login-page">
+  <!-- CARD -->
+    {% block page_content %}
+    {% for rides in bookride %}
+    {% if forloop.counter0|divisibleby:3 %} <div class="row row-container text-center main"> {%  endif %}
+    <div class="col-md-4 col-sm-6 card" style="width: 18rem;">
+        <img class="card-img-top" src="{{ rides.image.url }}" alt="{{ rides.title }}">
+        <div class="card-body">
+          <h4 class="card-title">{{ rides.title }}</h5>
+          <p class="card-text">{{rides.description}}</p>
+          <h5 class="card-title">Price : {{ rides.cost }}/- Rs</h4>
+          <a href="{% url 'fare' rides.pk  %}" class="btn btn-dark card-btn">Let's Go</a>
+          
+        </div>
+      </div>
+      {%  if forloop.counter|divisibleby:3 or forloop.last %}</div><!-- row closing -->{%  endif %}
+      
+    {% endfor %}
+    {% endblock %}
+    </div> 
+    </div>  
+  <!-- footer -->
+    <div class="bottom-container">
+        <p class="footer-text">© 2018 CityofBikes.</p>
+      </div>
+<!-- rides.pk -->
